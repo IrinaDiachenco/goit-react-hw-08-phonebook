@@ -1,55 +1,37 @@
 import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import AppBar from '../AppBar/AppBar';
+import Container from '../Container/Container';
+import HomeView from '../../views/HomeView/HomeView';
+import RegisterView from '../../views/RegisterView/RegisterView';
+import LoginView from '../../views/LoginView/LoginView';
+import ContactsView from '../../views/ContactsView/ContactsView';
 import { connect } from 'react-redux';
-import ContactForm from '../ContactForm/ContactForm';
-import ContactList from '../ContactList/ContactList';
-import Filter from '../Filter/Filter';
-import { CSSTransition } from 'react-transition-group';
-import styles from './App.module.css';
-import Loader from '../Loader/Loader';
-import selectors from '../../redux/contact/contact-selectors';
-import { fetchContacts } from '../../redux/contact/contact-operations';
+import authOperations from '../../redux/auth/auth-operations';
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchContacts();
+    this.props.onGetCurretnUser();
   }
+
   render() {
     return (
-    <>
-      {this.props.isLoading && <Loader />}
-      <div className={styles.container}>
-        <CSSTransition
-          in={true}
-          appear={true}
-          classNames={styles}
-          timeout={500}
-          unmountOnExit
-        >
-          <h2 className={styles.tittle}>Phonebook</h2>
-        </CSSTransition>
-
-        <ContactForm />
-        <div className={styles.filter}>
-          <h2>find contact</h2>
-          <Filter />
-        </div>
-        <ContactList />
-        </div>
-      </>
-    );
+  <Container>
+    <AppBar />
+    <Switch>
+      <Route exact path="/" component={HomeView} />
+      <Route path="/register" component={RegisterView} />
+      <Route path="/login" component={LoginView} />
+      <Route path="/contacts" component={ContactsView} />
+    </Switch>
+</Container>
+);
   }
 }
 
-const mapStateToProps = state => ({
-  contacts: selectors.getAllContacts(state),
-  isLoading: selectors.getLoading(state),
-});
+const mapDispatchToProps = {
+  onGetCurretnUser: authOperations.getCurrentUser,
+};
 
-const mapDispatchToProps = dispatch => ({
-  fetchContacts: () => dispatch(fetchContacts()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-
+export default connect(null, mapDispatchToProps)(App);
 
