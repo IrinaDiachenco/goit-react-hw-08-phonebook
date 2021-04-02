@@ -8,22 +8,28 @@ import {
   fetchContactsRequest,
   addContactError,
   deleteContactError,
+  toggleCompletedRequest,
+  toggleCompletedSuccess,
+  toggleCompletedError,
   fetchContactsError,
 } from './contact-actions';
 //axios.defaults.baseURL = 'http://localhost:3000';
 
-export const fetchContacts = () => dispatch => {
-    dispatch(fetchContactsRequest());
+axios.defaults.baseURL = 'https://goit-phonebook-api.herokuapp.com';
+
+export const fetchContacts = () => async dispatch => {
+  dispatch(fetchContactsRequest());
+
   axios
     .get('/contacts')
     .then(({ data }) => dispatch(fetchContactsSuccess(data)))
-    .catch(error => dispatch(fetchContactsError(error.message)));
+    .catch(error => dispatch(fetchContactsError(error.massage)));
 };
 
-export const addContact = ({name, phone}) => dispatch => {
+export const addContact = (name, number) => dispatch => {
   const contact = {
     name,
-    phone,
+    number,
   };
   dispatch(addContactRequest());
   axios
@@ -38,6 +44,17 @@ export const deleteContact = contactId => dispatch => {
     .delete(`/contacts/${contactId}`)
     .then(() => dispatch(deleteContactSuccess(contactId)))
     .catch(error => dispatch(deleteContactError(error.message)));
+};
+
+export const toggleCompleted = ({ id, completed }) => dispatch => {
+  const update = { completed };
+
+  dispatch(toggleCompletedRequest());
+
+  axios
+    .patch(`/contacts/${id}`, update)
+    .then(({ data }) => dispatch(toggleCompletedSuccess(data)))
+    .catch(error => dispatch(toggleCompletedError(error.message)));
 };
 
 // const operations = { fetchContacts, addContact, deleteContact };

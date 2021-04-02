@@ -10,6 +10,9 @@ import { changeFilter,
   addContactError,
   deleteContactError,
   fetchContactsError,
+  toggleCompletedRequest,
+  toggleCompletedSuccess,
+  toggleCompletedError,
 } from './contact-actions';
 
 const items = createReducer([], {
@@ -17,6 +20,8 @@ const items = createReducer([], {
   [addContactSuccess]: (state, { payload }) => [payload, ...state],
   [deleteContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
+  [toggleCompletedSuccess]: (state, { payload }) =>
+    state.map(todo => (todo.id === payload.id ? payload : todo)),
 })
 
 const filter = createReducer('', {
@@ -33,10 +38,16 @@ const loading = createReducer(false, {
   [deleteContactRequest]: () => true,
   [deleteContactSuccess]: () => false,
   [deleteContactError]: () => false,
+  [toggleCompletedRequest]: () => true,
+  [toggleCompletedSuccess]: () => false,
+  [toggleCompletedError]: () => false,
 });
+
+const error = createReducer(null, {});
 
 export default combineReducers({
   items,
   filter,
   loading,
+  error,
 });

@@ -1,3 +1,15 @@
+.container {
+  /* margin: 0 auto; */
+  width: 800px;
+  padding: 40px;
+  position: relative;
+}
+
+.tittle {
+  color: rgb(81, 81, 201);
+  font-size: 40px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -43,9 +55,4 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.alert {
-  width: 500px;
-  margin-bottom: 20px;
 }

@@ -19,7 +19,7 @@ const ContactList = ({ contacts, onRemove }) => {
     return (
       <>
         <TransitionGroup component="ul" className={styles.list}>
-          {contacts.map(({ name, phone, id }) => {
+          {contacts.map(({ name, number, id }) => {
             return (
               <CSSTransition
                 key={id}
@@ -28,7 +28,7 @@ const ContactList = ({ contacts, onRemove }) => {
                 unmountOnExit
               >
                 <li key={id}>
-                  {name}: {phone} <button className={styles.button} id={id} onClick={() => onRemove(id)}>x</button>
+                  {name}: {number} <button className={styles.button} id={id} onClick={() => onRemove(id)}>x</button>
                 </li>
               </CSSTransition>
             );
@@ -43,7 +43,7 @@ ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
-      phone: PropTypes.string,
+      number: PropTypes.string,
       id: PropTypes.string,
     }),
   ),
