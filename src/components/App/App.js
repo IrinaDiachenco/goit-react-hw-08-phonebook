@@ -10,7 +10,8 @@ import { connect } from 'react-redux';
 import authOperations from '../../redux/auth/auth-operations';
 import PrivateRoute from '../Route/PrivatRoute';
 import PublicRoute from '../Route/PublicRoute';
-import Loader from 'react-loader-spinner';
+//import Loader from 'react-loader-spinner';
+import Loader from '../Loader/Loader';
 
 const HomeView = lazy(() => import('../../views/HomeView/HomeView'));
 const RegisterView = lazy(() => import('../../views/RegisterView/RegisterView'));

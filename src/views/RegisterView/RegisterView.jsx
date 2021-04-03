@@ -83,7 +83,7 @@ class RegisterView extends Component {
 
           <button className={styles.button} type="submit">Register</button>
         </form>
-      </div>
+        </div>
     );
   }
 }
